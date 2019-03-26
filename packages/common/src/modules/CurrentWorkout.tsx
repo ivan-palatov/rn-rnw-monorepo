@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { RootStoreContext } from '../stores/RootStore';
 import WorkoutCard from '../ui/WorkoutCard';
+import WorkoutTimer from '../ui/WorkoutTimer';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,24 +16,28 @@ const styles = StyleSheet.create({
 interface IProps {}
 
 const CurrentWorkout = observer<IProps>(() => {
-  const { routerStore, workoutStore } = useContext(RootStoreContext);
+  const { workoutStore, workoutTimerStore } = useContext(RootStoreContext);
 
-  const showWorkoutHistory = () => {
-    routerStore.screen = 'WorkoutHistory';
-  };
+  useEffect(() => {
+    return () => {
+      workoutTimerStore.endTimer();
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
       {workoutStore.currentExercises.map(ex => (
         <WorkoutCard
           onSetPress={setIndex => {
-            const v = ex.sets[setIndex];
+            workoutTimerStore.startTimer();
 
+            const v = ex.sets[setIndex];
             let newValue: string;
 
             if (v === '') {
               newValue = ex.reps.toString();
             } else if (v === '0') {
+              workoutTimerStore.endTimer();
               newValue = '';
             } else {
               newValue = `${parseInt(v, 10) - 1}`;
@@ -46,8 +51,13 @@ const CurrentWorkout = observer<IProps>(() => {
           repsAndWeight={`${ex.numSets}x${ex.reps} ${ex.weight}`}
         />
       ))}
-
-      <Button title="Show Workout history" onPress={showWorkoutHistory} />
+      {workoutTimerStore.isRunning ? (
+        <WorkoutTimer
+          percent={workoutTimerStore.percent}
+          currentTime={workoutTimerStore.display}
+          onXPress={() => workoutTimerStore.endTimer()}
+        />
+      ) : null}
     </View>
   );
 });
