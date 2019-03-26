@@ -1,20 +1,21 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { RouterStoreContext } from '../stores/RouterStore';
+import { Button, StyleSheet, View } from 'react-native';
+import { RootStoreContext } from '../stores/RootStore';
 import WorkoutCard from '../ui/WorkoutCard';
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fafafa',
-    margin: 10,
+    padding: 10,
   },
 });
 
 interface IProps {}
 
-const CurrentWorkout: React.FC<IProps> = observer(() => {
-  const routerStore = useContext(RouterStoreContext);
+const CurrentWorkout = observer<IProps>(() => {
+  const { routerStore, workoutStore } = useContext(RootStoreContext);
 
   const showWorkoutHistory = () => {
     routerStore.screen = 'WorkoutHistory';
@@ -22,8 +23,30 @@ const CurrentWorkout: React.FC<IProps> = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Text>Current Workout page</Text>
-      <WorkoutCard sets={['5', '5', '5', 'x', '']} excercise="Squat" repsAndWeight="5x5 100" />
+      {workoutStore.currentExercises.map(ex => (
+        <WorkoutCard
+          onSetPress={setIndex => {
+            const v = ex.sets[setIndex];
+
+            let newValue: string;
+
+            if (v === '') {
+              newValue = ex.reps.toString();
+            } else if (v === '0') {
+              newValue = '';
+            } else {
+              newValue = `${parseInt(v, 10) - 1}`;
+            }
+
+            ex.sets[setIndex] = newValue;
+          }}
+          key={ex.excercise}
+          sets={ex.sets}
+          excercise={ex.excercise}
+          repsAndWeight={`${ex.numSets}x${ex.reps} ${ex.weight}`}
+        />
+      ))}
+
       <Button title="Show Workout history" onPress={showWorkoutHistory} />
     </View>
   );

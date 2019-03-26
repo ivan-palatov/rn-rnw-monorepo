@@ -1,5 +1,6 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const styles = StyleSheet.create({
   card: {
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     flexDirection: 'column',
     padding: 10,
+    marginBottom: 10,
   },
   topRow: {
     flexDirection: 'row',
@@ -25,22 +27,22 @@ const styles = StyleSheet.create({
     marginTop: 14,
   },
   circle: {
-    borderRadius: 15,
+    borderRadius: 25,
     backgroundColor: '#8fb299',
-    height: 30,
-    width: 30,
+    height: 50,
+    width: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   circleText: {
     color: '#fff',
-    fontSize: 15,
+    fontSize: 16,
   },
   fadedBackground: {
     backgroundColor: '#b2a1a1',
   },
   greyText: {
-    color: '#ccc',
+    color: '#655252',
   },
 });
 
@@ -48,9 +50,10 @@ interface IProps {
   excercise: string;
   repsAndWeight: string;
   sets: string[];
+  onSetPress: (index: number) => void;
 }
 
-const WorkoutCard: React.FC<IProps> = ({ excercise, repsAndWeight, sets }) => {
+const WorkoutCard = observer<IProps>(({ excercise, repsAndWeight, sets, onSetPress }) => {
   return (
     <View style={styles.card}>
       <View style={styles.topRow}>
@@ -68,18 +71,24 @@ const WorkoutCard: React.FC<IProps> = ({ excercise, repsAndWeight, sets }) => {
           }
 
           if (set === '') {
-            return <View style={[styles.circle, styles.fadedBackground]} key={set + i} />;
+            return (
+              <TouchableOpacity
+                onPress={() => onSetPress(i)}
+                style={[styles.circle, styles.fadedBackground]}
+                key={set + i}
+              />
+            );
           }
 
           return (
-            <View style={styles.circle} key={set + i}>
+            <TouchableOpacity onPress={() => onSetPress(i)} style={styles.circle} key={set + i}>
               <Text style={styles.circleText}>{set}</Text>
-            </View>
+            </TouchableOpacity>
           );
         })}
       </View>
     </View>
   );
-};
+});
 
 export default WorkoutCard;
