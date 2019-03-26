@@ -1,4 +1,5 @@
 import { observable } from 'mobx';
+import { createContext } from 'react';
 
 type WorkoutDay = 'a' | 'b';
 
@@ -20,3 +21,5 @@ class WorkoutStore {
 
   history: IHistory;
 }
+
+export const WorkoutStoreContext = createContext(WorkoutStore);
