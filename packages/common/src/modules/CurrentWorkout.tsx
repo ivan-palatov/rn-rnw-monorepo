@@ -1,6 +1,8 @@
+import dayjs from 'dayjs';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import { RouteComponentProps } from 'react-router';
 import { RootStoreContext } from '../stores/RootStore';
 import WorkoutCard from '../ui/WorkoutCard';
 import WorkoutTimer from '../ui/WorkoutTimer';
@@ -13,9 +15,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface IProps {}
+interface IProps extends RouteComponentProps {}
 
-const CurrentWorkout = observer<IProps>(() => {
+const CurrentWorkout = observer<IProps>(({ history }) => {
   const { workoutStore, workoutTimerStore } = useContext(RootStoreContext);
 
   useEffect(() => {
@@ -51,6 +53,14 @@ const CurrentWorkout = observer<IProps>(() => {
           repsAndWeight={`${ex.numSets}x${ex.reps} ${ex.weight}`}
         />
       ))}
+      <Button
+        title="Save"
+        onPress={() => {
+          workoutStore.history[dayjs().format('YYYY-MM-DD')] = workoutStore.currentExercises;
+          workoutStore.currentExercises = [];
+          history.push('/');
+        }}
+      />
       {workoutTimerStore.isRunning ? (
         <WorkoutTimer
           percent={workoutTimerStore.percent}
