@@ -14,7 +14,7 @@ const excerciseShortName = {
   Deadlift: 'DL',
   'Bench Press': 'BP',
   'Overhead Press': 'OHP',
-  'Barbell Row': 'ROW',
+  'Barbel Row': 'ROW',
 };
 
 const HistoryCard: React.FC<IProps> = ({ header, curEx, onPress }) => {

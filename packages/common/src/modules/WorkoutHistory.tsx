@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
-import { Button, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { RouteComponentProps } from 'react-router';
 import { RootStoreContext } from '../stores/RootStore';
 import { ICurrentExcercise } from '../stores/WorkoutStore';
+import Fab from '../ui/Fab';
 import HistoryCard from '../ui/HistoryCard';
 
 interface IProps extends RouteComponentProps {}
@@ -15,6 +16,9 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     padding: 10,
+  },
+  container: {
+    flex: 1,
   },
 });
 
@@ -36,36 +40,84 @@ const WorkoutHistory = observer<IProps>(({ history }) => {
   });
 
   const createWorkout = () => {
-    workoutStore.currentExercises.push(
-      {
-        excercise: 'Squat',
-        numSets: 5,
-        reps: 5,
-        sets: ['', '', '', '', ''],
-        weight: 100,
-      },
-      {
-        excercise: 'Bench Press',
-        numSets: 5,
-        reps: 5,
-        sets: ['', '', '', '', ''],
-        weight: 200,
-      },
-      {
-        excercise: 'Deadlift',
-        numSets: 1,
-        reps: 5,
-        sets: ['', 'x', 'x', 'x', 'x'],
-        weight: 360,
-      }
-    );
+    if (workoutStore.hasCurrentWorkout) {
+      return history.push('/current-workout');
+    }
+
+    const {
+      currentBarbelRow,
+      currentBenchPress,
+      currentDeadlift,
+      currentOverheadPress,
+      currentSquat,
+    } = workoutStore;
+    const emptySets = ['', '', '', '', ''];
+
+    if (workoutStore.lastWorkoutType === 'b') {
+      workoutStore.currentExercises.push(
+        {
+          excercise: 'Squat',
+          numSets: 5,
+          reps: 5,
+          sets: [...emptySets],
+          weight: currentSquat,
+        },
+        {
+          excercise: 'Bench Press',
+          numSets: 5,
+          reps: 5,
+          sets: [...emptySets],
+          weight: currentBenchPress,
+        },
+        {
+          excercise: 'Deadlift',
+          numSets: 1,
+          reps: 5,
+          sets: ['', 'x', 'x', 'x', 'x'],
+          weight: currentDeadlift,
+        }
+      );
+
+      workoutStore.currentSquat += 5;
+      workoutStore.currentBenchPress += 5;
+      workoutStore.currentDeadlift += 5;
+    } else {
+      workoutStore.currentExercises.push(
+        {
+          excercise: 'Barbel Row',
+          numSets: 5,
+          reps: 5,
+          sets: [...emptySets],
+          weight: currentBarbelRow,
+        },
+        {
+          excercise: 'Overhead Press',
+          numSets: 5,
+          reps: 5,
+          sets: [...emptySets],
+          weight: currentOverheadPress,
+        },
+        {
+          excercise: 'Squat',
+          numSets: 1,
+          reps: 5,
+          sets: [...emptySets],
+          weight: currentSquat,
+        }
+      );
+
+      workoutStore.currentSquat += 5;
+      workoutStore.currentOverheadPress += 5;
+      workoutStore.currentBarbelRow += 5;
+    }
+
+    workoutStore.lastWorkoutType = workoutStore.lastWorkoutType === 'a' ? 'b' : 'a';
 
     history.push('/current-workout');
   };
 
   return (
-    <View>
-      <Button title="Create Workout" onPress={createWorkout} />
+    <View style={styles.container}>
       <FlatList
         data={rows}
         keyExtractor={item => item.reduce((pv, cv) => pv + ' ' + cv.date, '')}
@@ -96,6 +148,7 @@ const WorkoutHistory = observer<IProps>(({ history }) => {
           </View>
         )}
       />
+      <Fab onPress={createWorkout} />
     </View>
   );
 });
