@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, FlatList, StyleSheet, View } from 'react-native';
 import { RouteComponentProps } from 'react-router';
 import { RootStoreContext } from '../stores/RootStore';
+import { ICurrentExcercise } from '../stores/WorkoutStore';
 import HistoryCard from '../ui/HistoryCard';
 
 interface IProps extends RouteComponentProps {}
@@ -11,18 +12,26 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
   },
+  cardContainer: {
+    flex: 1,
+    padding: 10,
+  },
 });
 
 const WorkoutHistory = observer<IProps>(({ history }) => {
   const { workoutStore } = useContext(RootStoreContext);
 
-  const rows: JSX.Element[][] = [];
-  Object.entries(workoutStore.history).forEach(([dt, v], i) => {
-    const hc = <HistoryCard key={dt} header={dt} curEx={v} />;
-    if (i % 2 === 0) {
-      rows.push([hc]);
+  const rows: Array<
+    Array<{
+      date: string;
+      excercises: ICurrentExcercise[];
+    }>
+  > = [];
+  Object.entries(workoutStore.history).forEach(([date, excercises], i) => {
+    if (i % 3 === 0) {
+      rows.push([{ date, excercises }]);
     } else {
-      rows[rows.length - 1].push(hc);
+      rows[rows.length - 1].push({ date, excercises });
     }
   });
 
@@ -56,13 +65,37 @@ const WorkoutHistory = observer<IProps>(({ history }) => {
 
   return (
     <View>
-      <Text>Workout history page</Text>
-      {rows.map((r, i) => (
-        <View style={styles.row} key={i}>
-          {r}
-        </View>
-      ))}
       <Button title="Create Workout" onPress={createWorkout} />
+      <FlatList
+        data={rows}
+        keyExtractor={item => item.reduce((pv, cv) => pv + ' ' + cv.date, '')}
+        renderItem={({ item }) => (
+          <View style={styles.row}>
+            {item.map(({ date, excercises }) => (
+              <View key={date} style={styles.cardContainer}>
+                <HistoryCard
+                  onPress={() => {
+                    const parts = date.split('-');
+                    history.push(`/workout/${parts[0]}/${parts[1]}/${parts[2]}`);
+                  }}
+                  header={date}
+                  curEx={excercises}
+                />
+              </View>
+            ))}
+            {item.length < 3 ? (
+              item.length < 2 ? (
+                <>
+                  <View style={styles.cardContainer} />
+                  <View style={styles.cardContainer} />
+                </>
+              ) : (
+                <View style={styles.cardContainer} />
+              )
+            ) : null}
+          </View>
+        )}
+      />
     </View>
   );
 });

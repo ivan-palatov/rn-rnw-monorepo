@@ -6,6 +6,7 @@ import Card from './Card';
 interface IProps {
   header: string;
   curEx: ICurrentExcercise[];
+  onPress: () => void;
 }
 
 const excerciseShortName = {
@@ -16,9 +17,9 @@ const excerciseShortName = {
   'Barbell Row': 'ROW',
 };
 
-const HistoryCard: React.FC<IProps> = ({ header, curEx }) => {
+const HistoryCard: React.FC<IProps> = ({ header, curEx, onPress }) => {
   return (
-    <Card>
+    <Card onPress={onPress}>
       <Text>{header}</Text>
       {curEx.map(ex => (
         <Text key={ex.excercise}>{`${
