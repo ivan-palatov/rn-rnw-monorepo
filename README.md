@@ -24,10 +24,10 @@ Basic app that helps users to setup their workout schedule and see their workout
     yarn build
    ```
 1. ```bash
-       # start the web app
-       yarn start:web
-       # or manualy go to packages/web and execute
-       yarn start
+    # start the web app
+    yarn start:web
+    # or manualy go to packages/web and execute
+    yarn start
    ```
    **See [app](https://github.com/ZVER3D/rn-rnw-monorepo/tree/master/packages/app) or [web](https://github.com/ZVER3D/rn-rnw-monorepo/tree/master/packages/web) readme to create production app**
 
