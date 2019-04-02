@@ -5,7 +5,12 @@
   "main": "index.js",
   "license": "MIT",
   "author": "ZVER3D",
+  "repository": "https://github.com/ZVER3D/rn-rnw-monorepo",
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "build:common": "cd packages/common && yarn build && cd ../..",
+    "start:web": "cd packages/web && yarn start"
+  }
 }

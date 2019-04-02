@@ -4,6 +4,13 @@
  *
  * @format
  */
+import path from 'path';
+
+const extraNodeModules = {
+  '@mono/common': path.resolve(__dirname + '/../common/'),
+};
+
+const watchFolders = [path.resolve(__dirname + '/../common/')];
 
 module.exports = {
   transformer: {
@@ -14,4 +21,8 @@ module.exports = {
       },
     }),
   },
+  resolver: {
+    extraNodeModules,
+  },
+  watchFolders,
 };
