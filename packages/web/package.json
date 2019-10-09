@@ -35,7 +35,7 @@
     "@types/react-native": "0.55.4",
     "tslint": "^5.14.0",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^3.6.0",
+    "tslint-react": "^4.1.0",
     "tslint-react-hooks": "^2.2.1"
   }
 }
