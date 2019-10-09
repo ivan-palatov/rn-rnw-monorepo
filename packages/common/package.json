@@ -8,7 +8,7 @@
     "mobx": "^5.9.0",
     "mobx-persist": "^0.4.1",
     "mobx-react-lite": "^1.4.1",
-    "react": "^16.8.5",
+    "react": "^16.10.2",
     "react-native": "^0.59.1",
     "react-router-dom": "^5.0.0",
     "react-router-native": "^5.1.2"
