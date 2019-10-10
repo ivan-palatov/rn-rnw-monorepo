@@ -16,7 +16,7 @@
   "devDependencies": {
     "@types/react-native": "^0.57.41",
     "@types/react-router-dom": "^5.1.0",
-    "@types/react-router-native": "^4.2.4",
+    "@types/react-router-native": "^5.1.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.3.4000"
   },
