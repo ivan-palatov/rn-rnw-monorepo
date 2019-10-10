@@ -10339,10 +10339,10 @@ react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.3, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.5.tgz#c54ac229dd66b5afe0de5acbe47647c3da692ff8"
   integrity sha512-sudt2uq5P/2TznPV4Wtdi+Lnq3yaYW8LfvPKLM9BKD8jJNBkxMVyB0C9/GmVhLw7Jbdmndk/73n7XQGeN9A3QQ==
 
-react-native-web@^0.11.2:
-  version "0.11.2"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.11.2.tgz#f3550589347be1f402f0641fefca687ca64a1750"
-  integrity sha512-EVUrBftCZBfUCOrwKJPh+hiGmDieBPL+5m+57BFg0UIH6uSmgvXK9r/xy6rQXLRMTgk3krDd94nRo3/31p69+A==
+react-native-web@^0.11.7:
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.11.7.tgz#d173d5a9b58db23b6d442c4bc4c81e9939adac23"
+  integrity sha512-w1KAxX2FYLS2GAi3w3BnEZg/IUu7FdgHnLmFKHplRnHMV3u1OPB2EVA7ndNdfu7ds4Rn2OZjSXoNh6F61g3gkA==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
