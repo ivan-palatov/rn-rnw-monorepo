@@ -1412,10 +1412,10 @@
     "@types/react" "*"
     "@types/react-router" "*"
 
-"@types/react-router-native@^4.2.4":
-  version "4.2.4"
-  resolved "https://registry.yarnpkg.com/@types/react-router-native/-/react-router-native-4.2.4.tgz#b86cb6e4e29d4055aea8e6ca3a3be9cb88b3f7c6"
-  integrity sha512-AvRp1Uuxmewo3+3BHhYPnZS9WVff2bjvpTJEXyZJmnf3FvSzeJJwmBOTjs33y3Ux2Uzg+3HCcF3qBq/jmV16uA==
+"@types/react-router-native@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-router-native/-/react-router-native-5.1.0.tgz#72eef279eb6fae34cded6fa1cc48a0b19e3e0fe0"
+  integrity sha512-Lk+aLihT6M3fPuvCQRv8n4G9ORQHuxEJYZe956p4yGmjX9Z2QEZeOWvsNcabljL42v4yOHCadWGZ05UFEodtMg==
   dependencies:
     "@types/history" "*"
     "@types/react" "*"
@@ -10896,7 +10896,7 @@ react-app-polyfill@^0.2.2:
     raf "3.4.1"
     whatwg-fetch "3.0.0"
 
-react-art@^16.10.2:
+react-art@^16.8.5:
   version "16.10.2"
   resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.10.2.tgz#c9b7a76f3e52e3ad190dad8d1b1d098a9b6939c3"
   integrity sha512-6tKrPJOGtToeRFTHgxx5eaMR2SgHe6YGcZ+JF162itsagHGIh/pwbyEk2wuJroVeDreVSKqijmfii1y19c8mLQ==
