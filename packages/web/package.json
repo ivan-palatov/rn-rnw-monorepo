@@ -32,7 +32,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/react-native": "0.55.4",
+    "@types/react-native": "0.60.21",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.1.0",
